@@ -45,6 +45,7 @@ func redisHandler(w http.ResponseWriter, r *http.Request)  {
 
 func redisPoolHandler(w http.ResponseWriter, r *http.Request) {
 	c := pool.Get()
+	defer c.Close()
 
 	hello := redis.GetHello(c)
 	w.Write([]byte(hello))

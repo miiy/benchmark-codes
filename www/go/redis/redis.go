@@ -74,8 +74,8 @@ func redisPool(config *config.Redis) *redis.Pool {
 			_, err := c.Do("PING")
 			return err
 		},
-		MaxIdle:         100,
-		MaxActive:       200,
+		MaxIdle:         1000,
+		MaxActive:       10000,
 		IdleTimeout:     300 * time.Second,
 		Wait:            false,
 		MaxConnLifetime: 0,

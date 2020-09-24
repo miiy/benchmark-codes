@@ -47,6 +47,7 @@ func redisHandler(ctx *gin.Context) {
 
 func redisPoolHandler(ctx *gin.Context) {
 	c := pool.Get()
+	defer c.Close()
 
 	hello := redis.GetHello(c)
 	ctx.Writer.Write([]byte(hello))
