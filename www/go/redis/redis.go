@@ -20,6 +20,11 @@ func NewConn(config *config.Redis) (redis.Conn, error) {
 	if err != nil {
 		return c, err
 	}
+	if config.Password != "" {
+		if _, err := c.Do("AUTH", config.Password); err != nil {
+			return nil, err
+		}
+	}
 	return c, nil
 }
 
@@ -69,8 +74,8 @@ func redisPool(config *config.Redis) *redis.Pool {
 			_, err := c.Do("PING")
 			return err
 		},
-		MaxIdle:         50,
-		MaxActive:       30,
+		MaxIdle:         100,
+		MaxActive:       200,
 		IdleTimeout:     300 * time.Second,
 		Wait:            false,
 		MaxConnLifetime: 0,
